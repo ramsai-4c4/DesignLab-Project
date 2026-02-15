@@ -188,8 +188,8 @@ exports.viewContent = async (req, res) => {
     if (upload.type === "text") {
       payload.textContent = upload.textContent;
     } else {
-      /* Generate a signed download URL */
-      const signedUrl = await getSignedUrl(upload.supabasePath, 120);
+      /* Generate a signed download URL with Content-Disposition: attachment */
+      const signedUrl = await getSignedUrl(upload.supabasePath, 120, upload.fileName);
       payload.downloadUrl = signedUrl;
       payload.fileName = upload.fileName;
       payload.fileMimeType = upload.fileMimeType;

@@ -219,14 +219,29 @@ export default function ViewPage() {
                   {(content.fileSize / 1024).toFixed(1)} KB
                 </p>
               </div>
-              <a
-                href={content.downloadUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={async () => {
+                  try {
+                    toast.loading("Downloading…", { id: "dl" });
+                    const resp = await fetch(content.downloadUrl);
+                    const blob = await resp.blob();
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = content.fileName || "download";
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    URL.revokeObjectURL(url);
+                    toast.success("Download started!", { id: "dl" });
+                  } catch {
+                    toast.error("Download failed.", { id: "dl" });
+                  }
+                }}
                 className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-brand-600 text-white hover:bg-brand-700 transition font-medium text-sm shrink-0"
               >
                 <FiDownload /> Download
-              </a>
+              </button>
             </div>
           </>
         )}

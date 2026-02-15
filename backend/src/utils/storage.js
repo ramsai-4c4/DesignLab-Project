@@ -23,10 +23,11 @@ async function uploadFile(buffer, remotePath, mimeType) {
  * Generate a short-lived signed URL so the user can download the file.
  * Valid for 60 seconds — enough for a single download click.
  */
-async function getSignedUrl(remotePath, expiresInSeconds = 60) {
+async function getSignedUrl(remotePath, expiresInSeconds = 60, downloadFilename = null) {
+  const options = downloadFilename ? { download: downloadFilename } : {};
   const { data, error } = await supabase.storage
     .from(BUCKET)
-    .createSignedUrl(remotePath, expiresInSeconds);
+    .createSignedUrl(remotePath, expiresInSeconds, options);
 
   if (error) throw new Error(`Supabase signed URL failed: ${error.message}`);
   return data.signedUrl;
