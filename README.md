@@ -305,4 +305,6 @@ Here's what I'm aware of and would want to fix if this were going to production:
 10. **Frontend is dev-only right now.** There's no production build/deploy pipeline set up. You'd run `npm run build` in the frontend folder and serve the `dist/` folder with Nginx or deploy to Vercel/Netlify.
 =======
 # DesignLab-Project
->>>>>>> 61a1f04e53c99d3144cc9f23e48867bf9069e07c
+Author
+P Ram Sai Gopal
+
